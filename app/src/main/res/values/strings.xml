@@ -1,3 +1,10 @@
 <resources>
+    <string name="email_preference">com.vanderkast.smsforward.email_preference</string>
+    <string name="phone_preference">com.vanderkast.smsforward.phone_preference</string>
+
     <string name="app_name">Sms Forward</string>
+    <string name="phone_hint">Номер смс истории</string>
+    <string name="save_phone">Сохранить номер</string>
+    <string name="save_email">Сохранить адрес почты</string>
+    <string name="send_to_emaшl">Отправить</string>
 </resources>

@@ -5,15 +5,104 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/hub"
         tools:context=".MainActivity">
 
-    <TextView
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:id="@+id/phone_input_layout"
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+
+            android:paddingStart="12dp"
+            android:paddingEnd="24dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+    >
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:hint="@string/phone_hint"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="true">
 
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+                android:id="@+id/save_phone_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                app:icon="@drawable/lock_open"
+                app:iconSize="30dp"
+                android:tooltipText="@string/save_phone"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/email_input_layout"
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+
+            android:paddingStart="12dp"
+            android:paddingEnd="24dp"
+
+            app:layout_constraintTop_toBottomOf="@+id/phone_input_layout"
+    >
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:hint="@string/phone_hint"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+                android:id="@+id/save_email_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                app:icon="@drawable/lock_open"
+                app:iconSize="30dp"
+                android:tooltipText="@string/save_email"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+        />
+    </LinearLayout>
+    <Button
+            android:text="@string/send_to_emaшl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+
+            app:layout_constraintTop_toBottomOf="@+id/email_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.MaterialComponents.Button"
+    />
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
