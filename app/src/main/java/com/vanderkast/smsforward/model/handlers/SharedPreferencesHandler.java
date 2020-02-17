@@ -17,7 +17,10 @@ public abstract class SharedPreferencesHandler<T> implements DataHandler<T> {
         if (context != null) {
             SharedPreferences.Editor editor =
                     context.getSharedPreferences(preferencesName, Context.MODE_PRIVATE).edit();
-            write(editor, data);
+            if (data == null)
+                editor.clear();
+            else
+                write(editor, data);
             editor.apply();
         } else throw new NoContextFoundException();
     }

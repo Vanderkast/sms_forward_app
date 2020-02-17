@@ -8,6 +8,7 @@
         android:id="@+id/hub"
         tools:context=".MainActivity">
 
+
     <LinearLayout
             android:id="@+id/phone_input_layout"
 
@@ -19,14 +20,15 @@
             android:paddingEnd="24dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
     >
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:layout_marginEnd="4dp"
                 android:hint="@string/phone_hint"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintEnabled="true">
@@ -38,13 +40,16 @@
                     android:inputType="number"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_phone_button"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+
                 app:icon="@drawable/lock_open"
                 app:iconSize="30dp"
                 android:tooltipText="@string/save_phone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
     </LinearLayout>
     <LinearLayout
@@ -65,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:hint="@string/phone_hint"
+                android:layout_marginEnd="4dp"
+                android:hint="@string/email_hint"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintEnabled="true">
 
@@ -73,21 +79,24 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_email_button"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+
                 app:icon="@drawable/lock_open"
                 app:iconSize="30dp"
+
                 android:tooltipText="@string/save_email"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
         />
     </LinearLayout>
-    <Button
+    <com.google.android.material.button.MaterialButton
             android:text="@string/send_to_emaшl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,6 +107,7 @@
             app:layout_constraintTop_toBottomOf="@+id/email_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Widget.MaterialComponents.Button"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
     />
     <ProgressBar
             android:id="@+id/progressBar"

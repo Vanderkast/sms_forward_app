@@ -11,6 +11,6 @@ public class PhoneHandler extends SharedPreferencesHandler<String>{
 
     @Override
     protected String read(SharedPreferences sharedPreferences) {
-        return null;
+        return sharedPreferences.getString(preferencesName, null);
     }
 }

@@ -7,4 +7,5 @@
     <string name="save_phone">Сохранить номер</string>
     <string name="save_email">Сохранить адрес почты</string>
     <string name="send_to_emaшl">Отправить</string>
+    <string name="email_hint">адрес почты</string>
 </resources>
