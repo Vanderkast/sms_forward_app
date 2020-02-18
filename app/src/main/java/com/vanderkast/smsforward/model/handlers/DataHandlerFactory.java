@@ -11,9 +11,6 @@ import com.vanderkast.smsforward.model.Phone;
 public class DataHandlerFactory {
     @SuppressWarnings("unchecked")
     public static DataHandler<?> create(Class<? extends Data> dataChild) {
-        //lines below have no mean because compiler checks data passed
-        //if(!Data.class.isAssignableFrom(dataChild))
-        //    throw new IllegalArgumentException();
         Context context = DaggerGlobalComponent
                 .builder()
                 .globalModule(GlobalModuleSingleton.getModule())
