@@ -315,3 +315,5 @@ Thumbs.db
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/java,gradle,android,intellij+all,androidstudio
+
+app/src/main/java/com/vanderkast/smsforward/email_handler/EmailData.java
