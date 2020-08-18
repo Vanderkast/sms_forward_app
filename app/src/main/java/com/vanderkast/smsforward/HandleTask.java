@@ -27,7 +27,7 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
     @Override
     protected Boolean doInBackground(InputValues... inputValuesArr) {
         InputValues inputValues = inputValuesArr[0];
-        String emailText = SmsHandlerFactory.byPhone(inputValues.phone)
+        var emailText = SmsHandlerFactory.byPhone(inputValues.phone)
                 .handle(new HistoryLoaderImpl(), inputValues.phone, inputValues.date);
         try {
             sendEmail(fillEmailData(inputValues, emailText));
@@ -43,14 +43,11 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
     }
 
     private void sendEmail(EmailData emailData) throws Exception {
-        emailSender.send(emailData.getSubject(),
-                emailData.getText(),
-                EmailInfo.address,
-                emailData.getRecipientAddress());
+        emailSender.send(emailData, EmailInfo.address);
     }
 
     private EmailData fillEmailData(InputValues inputValues, String text) {
-        return new EmailData(inputValues.email, "SMS " + inputValues.phone + " " + inputValues.date, text);
+        return new EmailData(inputValues.email, "SMS " + inputValues.phone + " " + inputValues.date, text, attachment);
     }
 
     static class InputValues {

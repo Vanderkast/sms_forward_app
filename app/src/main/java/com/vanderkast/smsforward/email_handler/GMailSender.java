@@ -3,12 +3,10 @@ package com.vanderkast.smsforward.email_handler;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.inject.Inject;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +59,8 @@ public class GMailSender extends javax.mail.Authenticator implements EmailSender
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
+//            Multipart attachment = new MimeMultipart();
+//            message.setContent();
             Transport.send(message);
         } catch(Exception e){
             //ignored

@@ -7,11 +7,12 @@ import androidx.annotation.NonNull;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class SimpleSmsHandler implements SmsHandler<String> {
+public class SberbankAttachmentSmsHandlerImpl implements SmsHandler<List<String[]>> {
+
     @SuppressLint("SimpleDateFormat")
     @Override
-    public String handle(HistoryLoader loader, String number, @NonNull String selectedDate) {
-        StringBuilder builder = new StringBuilder();
+    public List<String[]> handle(HistoryLoader loader, String number, @NonNull String selectedDate) {
+        Map<String, List<String>> map = new HashMap<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
         Cursor cursor = loader.load(number);
@@ -21,12 +22,24 @@ public class SimpleSmsHandler implements SmsHandler<String> {
                 Date smsDate = new Date(Long.parseLong(cursor.getString(1)));
                 String formattedDate = dateFormat.format(smsDate);
                 String body = cursor.getString(2);
+                String card = body.split(" ")[0];
                 if (selectedDate.isEmpty() || formattedDate.equals(selectedDate)) {
-                    builder.append(dateTimeFormat.format(smsDate)).append(" ").append(body).append("\n");
+                    if (!map.containsKey(card))
+                        map.put(card, new LinkedList<>());
+                    map.get(card).add(dateTimeFormat.format(smsDate) + " " + body);
                 }
             }
             cursor.close();
         }
+        return fromMap(map);
+    }
+
+    private String fromMap(Map<String, List<String>> map) {
+        StringBuilder builder = new StringBuilder();
+        map.forEach((k, arr) -> {
+            builder.append(k).append(":\n\n");
+            arr.forEach(body -> builder.append(body).append("\n"));
+        });
         return builder.toString();
     }
 }

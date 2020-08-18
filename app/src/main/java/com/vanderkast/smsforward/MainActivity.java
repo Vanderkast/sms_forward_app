@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     private void askForPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 911);
-        } else {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+                == PackageManager.PERMISSION_GRANTED)
             new HandleTask(this::onSendingDone)
                     .execute(new HandleTask.InputValues(getEmail(), getPhone(), getDate()));
-        }
+        else
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 911);
     }
 
     @Override
