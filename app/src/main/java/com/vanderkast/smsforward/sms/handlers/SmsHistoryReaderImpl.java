@@ -1,4 +1,4 @@
-package com.vanderkast.smsforward.sms_refactor;
+package com.vanderkast.smsforward.sms.handlers;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;

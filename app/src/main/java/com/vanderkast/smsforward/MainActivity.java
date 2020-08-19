@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.vanderkast.smsforward.extension.SavingButtonImpl;
 import com.vanderkast.smsforward.global.GlobalModule;
 import com.vanderkast.smsforward.global.GlobalModuleSingleton;
 import com.vanderkast.smsforward.model.Email;
+import com.vanderkast.smsforward.model.Input;
 import com.vanderkast.smsforward.model.Phone;
 import com.vanderkast.smsforward.model.handlers.DataHandler;
 import com.vanderkast.smsforward.model.handlers.DataHandlerFactory;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpGlobal();
+
         Optional.ofNullable((DataHandler<String>) DataHandlerFactory.create(Phone.class))
                 .ifPresent(this::setUpPhoneViews);
         Optional.ofNullable((DataHandler<String>) DataHandlerFactory.create(Email.class))
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
                 == PackageManager.PERMISSION_GRANTED)
             new HandleTask(this::onSendingDone)
-                    .execute(new HandleTask.InputValues(getEmail(), getPhone(), getDate()));
+                    .execute(new Input(getDate(), getPhone(), getEmail(), isWithCsvFile()));
         else
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 911);
     }
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 findViewById(R.id.send_sms_to_email_button).setClickable(false);
             } else {
                 new HandleTask(this::onSendingDone)
-                        .execute(new HandleTask.InputValues(getEmail(), getPhone(), getDate()));
+                        .execute(new Input(getDate(), getPhone(), getEmail(), isWithCsvFile()));
             }
         }
     }
@@ -136,5 +139,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private String getEmail() {
         return ((EditText) findViewById(R.id.email_input)).getText().toString();
+    }
+
+    private boolean isWithCsvFile() {
+        return ((CheckBox) findViewById(R.id.sendAsCsvFile)).isChecked();
     }
 }

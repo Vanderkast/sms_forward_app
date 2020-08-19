@@ -1,12 +1,10 @@
 package com.vanderkast.smsforward.email_handler;
 
-import java.io.File;
-
 public class EmailData {
     private final String recipientAddress;
     private final String subject;
     private final String text;
-    private final File attachment;
+    private final String attachment;
 
     public EmailData(String recipientAddress, String subject, String text) {
         this.recipientAddress = recipientAddress;
@@ -15,7 +13,7 @@ public class EmailData {
         attachment = null;
     }
 
-    public EmailData(String recipientAddress, String subject, String text, File attachment) {
+    public EmailData(String recipientAddress, String subject, String text, String attachment) {
         this.recipientAddress = recipientAddress;
         this.subject = subject;
         this.text = text;
@@ -34,7 +32,7 @@ public class EmailData {
         return text;
     }
 
-    public File getAttachment() {
+    public String getAttachment() {
         return attachment;
     }
 }

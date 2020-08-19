@@ -48,6 +48,7 @@ captures/
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
+
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml
@@ -317,3 +318,4 @@ Thumbs.db
 # End of https://www.gitignore.io/api/java,gradle,android,intellij+all,androidstudio
 
 app/src/main/java/com/vanderkast/smsforward/email_handler/EmailData.java
+!app/libs/*.jar

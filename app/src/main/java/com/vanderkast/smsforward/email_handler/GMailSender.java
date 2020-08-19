@@ -2,9 +2,11 @@ package com.vanderkast.smsforward.email_handler;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.inject.Inject;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayInputStream;
@@ -48,21 +50,28 @@ public class GMailSender extends javax.mail.Authenticator implements EmailSender
     }
 
     @Override
-    public synchronized void send(String subject, String body, String sender, String recipients) throws Exception {
-        try{
+    public synchronized void send(EmailData data, String to) throws Exception {
+        try {
             MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
-            message.setSender(new InternetAddress(sender));
-            message.setSubject(subject);
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(data.getText().getBytes(), "text/plain"));
+            message.setSender(new InternetAddress(data.getRecipientAddress()));
+            message.setSubject(data.getSubject());
             message.setDataHandler(handler);
-            if (recipients.indexOf(',') > 0)
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
+            if (data.getRecipientAddress().indexOf(',') > 0)
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(data.getRecipientAddress()));
             else
-                message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
-//            Multipart attachment = new MimeMultipart();
-//            message.setContent();
+                message.setRecipient(Message.RecipientType.TO, new InternetAddress(data.getRecipientAddress()));
+
+            if (data.getAttachment() != null) {
+                Multipart attachment = new MimeMultipart();
+                MimeBodyPart part = new MimeBodyPart();
+                part.setFileName(data.getAttachment());
+                part.setDataHandler(new DataHandler(new FileDataSource(part.getFileName())));
+                attachment.addBodyPart(part);
+                message.setContent(attachment);
+            }
             Transport.send(message);
-        } catch(Exception e){
+        } catch (Exception e) {
             //ignored
             e.printStackTrace();
         }
