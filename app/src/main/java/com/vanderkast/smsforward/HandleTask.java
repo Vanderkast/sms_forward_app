@@ -16,7 +16,7 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
     @Inject
     EmailSender emailSender;
 
-    private OnDoneAction onDoneAction;
+    private final OnDoneAction onDoneAction;
 
     public HandleTask(OnDoneAction onDoneAction) {
         this.onDoneAction = onDoneAction;
@@ -54,9 +54,9 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
     }
 
     static class InputValues {
-        private String email;
-        private String phone;
-        private String date;
+        private final String email;
+        private final String phone;
+        private final String date;
 
         InputValues(String email, String phone, String date) {
             this.email = email;
