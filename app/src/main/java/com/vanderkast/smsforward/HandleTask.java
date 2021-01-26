@@ -5,16 +5,18 @@ import android.os.AsyncTask;
 import com.vanderkast.smsforward.email_handler.EmailData;
 import com.vanderkast.smsforward.email_handler.EmailInfo;
 import com.vanderkast.smsforward.email_handler.EmailSender;
-import com.vanderkast.smsforward.sms.HistoryLoaderImpl;
-import com.vanderkast.smsforward.sms.SmsHandlerFactory;
-import com.vanderkast.smsforward.sms.SmsModule;
+import com.vanderkast.smsforward.model.Input;
+import com.vanderkast.smsforward.sms.SmsHandlersChainFacade;
 import dagger.Component;
 
 import javax.inject.Inject;
 
-public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean> {
+public class HandleTask extends AsyncTask<Input, Void, Boolean> {
     @Inject
     EmailSender emailSender;
+
+    @Inject
+    SmsHandlersChainFacade facade;
 
     private final OnDoneAction onDoneAction;
 
@@ -25,12 +27,10 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
     }
 
     @Override
-    protected Boolean doInBackground(InputValues... inputValuesArr) {
-        InputValues inputValues = inputValuesArr[0];
-        String emailText = SmsHandlerFactory.byPhone(inputValues.phone)
-                .handle(new HistoryLoaderImpl(), inputValues.phone, inputValues.date);
+    protected Boolean doInBackground(Input... inputs) {
+        EmailData data = facade.run(inputs[0]);
         try {
-            sendEmail(fillEmailData(inputValues, emailText));
+            emailSender.send(data, EmailInfo.address);
         } catch (Exception e) {
             return false;
         }
@@ -42,38 +42,17 @@ public class HandleTask extends AsyncTask<HandleTask.InputValues, Void, Boolean>
         onDoneAction.onDone(success);
     }
 
-    private void sendEmail(EmailData emailData) throws Exception {
-        emailSender.send(emailData.getSubject(),
-                emailData.getText(),
-                EmailInfo.address,
-                emailData.getRecipientAddress());
-    }
-
-    private EmailData fillEmailData(InputValues inputValues, String text) {
-        return new EmailData(inputValues.email, "SMS " + inputValues.phone + " " + inputValues.date, text);
-    }
-
-    static class InputValues {
-        private final String email;
-        private final String phone;
-        private final String date;
-
-        InputValues(String email, String phone, String date) {
-            this.email = email;
-            this.phone = phone;
-            this.date = date;
-        }
-    }
-
     @FunctionalInterface
     public interface OnDoneAction {
         void onDone(Boolean success);
     }
 
-    @Component(modules = SmsModule.class)
+    @Component(modules = DependencyModule.class)
     public interface TaskComponent {
         void inject(HandleTask task);
 
         EmailSender smsSender();
+
+        SmsHandlersChainFacade facade();
     }
 }

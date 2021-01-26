@@ -6,10 +6,12 @@
     <string name="phone_hint">Номер смс истории</string>
     <string name="save_phone">Сохранить номер</string>
     <string name="save_email">Сохранить адрес почты</string>
-    <string name="send_to_emaшl">Отправить</string>
-    <string name="email_hint">адрес почты</string>
+    <string name="send_to_email">Отправить</string>
+    <string name="email_hint">Адрес почты</string>
     <string name="set_date">Установить дату</string>
     <string name="date_hint">Дата</string>
     <string name="sending_complete_successfully">Сообщения успешно обработаны и отправлены.</string>
     <string name="sending_gone_wrong">Во время работы произошел сбой</string>
+    <string name="send_as_csv">отправить .csv файлом</string>
+    <string name="server_hint">Адрес сервера</string>
 </resources>
